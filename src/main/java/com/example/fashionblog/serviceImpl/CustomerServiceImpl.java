@@ -72,9 +72,11 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public String createComment(CreateCommentDto createCommentDto) {
+
         Integer customerId = (Integer) httpSession.getAttribute("id");
+        if (customerId == null) throw new CustomerNotFoundException("Login please");
         Customer customer = customerRepository.findById(customerId).orElseThrow(
-                ()-> new CustomerNotFoundException("Please Identify yourself!"));
+                ()-> new CustomerNotFoundException("Please Identify yourself as Customer!"));
         String Role = (String) httpSession.getAttribute("customerRole");
 
         if(Role.equals("") || Role == null){
