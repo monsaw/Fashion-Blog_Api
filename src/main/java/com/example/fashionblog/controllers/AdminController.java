@@ -67,4 +67,10 @@ public class AdminController {
     public ResponseEntity<List<AllBlogResponseDto>> allBlogsPostByCreator(@RequestParam("creator") String creator){
         return ResponseEntity.ok(adminService.allBlogsByCreator(creator));
     }
+
+    @GetMapping("/all-comment-by-customer-per-blog")
+    public ResponseEntity<List<?>> allCommentPerProduct(@RequestParam("blogId") Integer blogId){
+        return ResponseEntity.ok(adminService.findAllByBlogId(blogId));
+
+    }
 }

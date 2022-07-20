@@ -79,14 +79,14 @@ public class CustomerServiceImpl implements CustomerService {
                 ()-> new CustomerNotFoundException("Please Identify yourself as Customer!"));
         String Role = (String) httpSession.getAttribute("customerRole");
 
-        if(Role.equals("") || Role == null){
+        if(Role == null){
             throw new CustomerNotFoundException("Please Sign in/Sign up as Customer");
         }
         if(!Role.equals("USER")){
             throw new CustomerNotFoundException("Please Sign in/Sign up first");
         }
         commentService.create(createCommentDto,customer);
-    return customer.getName()+ " commented on this post"; }
+    return customer.getName()+ " commented on this blog";}
 
     @Override
     public String logoutCustomer() {

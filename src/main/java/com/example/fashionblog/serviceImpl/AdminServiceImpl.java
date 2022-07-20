@@ -5,13 +5,13 @@ import com.example.fashionblog.dto.*;
 import com.example.fashionblog.entity.Admin;
 import com.example.fashionblog.exceptions.AdminExistException;
 import com.example.fashionblog.exceptions.AdminNotFound;
-import com.example.fashionblog.exceptions.BlogNotExist;
 import com.example.fashionblog.repository.AdminRepository;
 import com.example.fashionblog.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -24,13 +24,16 @@ public class AdminServiceImpl implements AdminService {
 
     private final BlogServiceImpl blogService;
 
+    private final CommentServiceImpl commentService;
+
     @Autowired
     public AdminServiceImpl(AdminRepository adminRepository, HttpSession httpSession, CategoryServiceImpl
-            categoryService, BlogServiceImpl blogService) {
+            categoryService, BlogServiceImpl blogService, CommentServiceImpl commentService) {
         this.adminRepository = adminRepository;
         this.httpSession = httpSession;
         this.categoryService = categoryService;
         this.blogService = blogService;
+        this.commentService = commentService;
     }
 
     @Override
@@ -143,6 +146,15 @@ public class AdminServiceImpl implements AdminService {
             return blogService.findAllBlogByAdmin(name);
         }
         throw new AdminNotFound("You must sign in to see all Blogs by Creator!");
+
+    }
+
+    @Override
+    public List<?> findAllByBlogId(Integer blogId) {
+        if(getLoggedAdminByEmailAndRole()){
+            return commentService.findAllByBlogId(blogId);
+        }
+        throw new AdminNotFound("You are required to login as admin to view all comment...");
 
     }
 

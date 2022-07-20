@@ -28,4 +28,6 @@ public interface AdminService {
     List<AllBlogResponseDto> allBlogsByCat(String name);
 
     List<AllBlogResponseDto> allBlogsByCreator(String name);
+
+    List<?> findAllByBlogId(Integer blogId);
 }
