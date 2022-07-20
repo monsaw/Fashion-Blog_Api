@@ -86,7 +86,7 @@ public class CustomerServiceImpl implements CustomerService {
             throw new CustomerNotFoundException("Please Sign in/Sign up first");
         }
         commentService.create(createCommentDto,customer);
-    return customer.getName()+ " commented on this post "; }
+    return customer.getName()+ " commented on this post"; }
 
     @Override
     public String logoutCustomer() {
