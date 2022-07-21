@@ -64,6 +64,6 @@ public class LikeServiceImpl implements LikeService {
                 .imageUrl(blog.getImageUrl())
                 .Total("The total "+ rate + " count for this blog is " + rateCount.size())
                 .build();
-        return likeCount;
+        return likeCount ;
     }
 }
