@@ -106,7 +106,7 @@ public class CustomerServiceImpl implements CustomerService {
         Customer customer = customerRepository.findById(
                 customerId).orElseThrow(()-> new CustomerNotFoundException("Please Identify yourself as Customer!"));
         if(!customer.getRole().equals("USER")) throw new CustomerNotFoundException("You must be a Customer to Like");
-        return likeService.create(likeCreateDto, customer, blog );
+        return likeService.create(likeCreateDto, customer, blog);
     }
 
     @Override
