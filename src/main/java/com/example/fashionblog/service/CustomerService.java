@@ -13,5 +13,7 @@ public interface CustomerService {
 
     String createComment(CreateCommentDto createCommentDto);
 
+    String createLike(LikeCreateDto likeCreateDto);
+
     String logoutCustomer();
 }

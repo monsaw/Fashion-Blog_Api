@@ -21,4 +21,6 @@ public interface BlogRepository extends JpaRepository<Blog, Integer> {
 //    List<Blog> findAllByBlogPostOrderByCreateDesc();
 
 
+
+
 }

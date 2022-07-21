@@ -1,10 +1,7 @@
 package com.example.fashionblog.controllers;
 
 
-import com.example.fashionblog.dto.AdminLoginDto;
-import com.example.fashionblog.dto.CreateCommentDto;
-import com.example.fashionblog.dto.CustomerCreateDto;
-import com.example.fashionblog.dto.CustomerLoginDto;
+import com.example.fashionblog.dto.*;
 import com.example.fashionblog.serviceImpl.CategoryServiceImpl;
 import com.example.fashionblog.serviceImpl.CustomerServiceImpl;
 import org.springframework.http.ResponseEntity;
@@ -38,5 +35,10 @@ public class CustomerController {
     @PostMapping("/comment")
     public ResponseEntity<String> customerComment(@RequestBody CreateCommentDto createCommentDto){
         return ResponseEntity.ok(customerService.createComment(createCommentDto));
+    }
+
+    @PostMapping("/like")
+    public ResponseEntity<String> customerComment(@RequestBody LikeCreateDto likeCreateDto){
+        return ResponseEntity.ok(customerService.createLike(likeCreateDto));
     }
 }

@@ -43,7 +43,7 @@ public class Blog {
     @ManyToOne(cascade = CascadeType.ALL)
     private Category category;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY, mappedBy = "blog")
     private List<Like> likes;
 
     @ManyToOne(cascade = CascadeType.ALL)

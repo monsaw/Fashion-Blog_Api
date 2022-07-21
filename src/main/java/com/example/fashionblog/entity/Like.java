@@ -2,10 +2,7 @@ package com.example.fashionblog.entity;
 
 
 import com.example.fashionblog.enums.Rate;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -15,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Builder
 public class Like {
 
     @Id
@@ -24,11 +22,11 @@ public class Like {
     @Enumerated(value = EnumType.STRING)
     private Rate rate;
 
-    @ManyToMany(cascade = CascadeType.ALL ,fetch=FetchType.LAZY, mappedBy = "likes")
-    private List<Blog> blogs;
+    @ManyToOne(cascade = CascadeType.ALL ,fetch=FetchType.LAZY)
+    private Blog blog;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "likes")
-    private List<Customer> customers;
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Customer customer;
 
 
 }

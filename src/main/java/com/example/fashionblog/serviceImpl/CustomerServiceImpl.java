@@ -3,10 +3,14 @@ package com.example.fashionblog.serviceImpl;
 import com.example.fashionblog.dto.CreateCommentDto;
 import com.example.fashionblog.dto.CustomerCreateDto;
 import com.example.fashionblog.dto.CustomerLoginDto;
+import com.example.fashionblog.dto.LikeCreateDto;
+import com.example.fashionblog.entity.Blog;
 import com.example.fashionblog.entity.Customer;
 import com.example.fashionblog.exceptions.AdminExistException;
 import com.example.fashionblog.exceptions.AdminNotFound;
+import com.example.fashionblog.exceptions.BlogNotExist;
 import com.example.fashionblog.exceptions.CustomerNotFoundException;
+import com.example.fashionblog.repository.BlogRepository;
 import com.example.fashionblog.repository.CustomerRepository;
 import com.example.fashionblog.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +24,19 @@ public class CustomerServiceImpl implements CustomerService {
 
     private final CommentServiceImpl commentService;
 
+    private final BlogRepository blogRepository;
+
     private final HttpSession httpSession;
 
+    private final LikeServiceImpl likeService;
+
     @Autowired
-    public CustomerServiceImpl(CustomerRepository customerRepository, CommentServiceImpl commentService, HttpSession httpSession) {
+    public CustomerServiceImpl(CustomerRepository customerRepository, CommentServiceImpl commentService, BlogRepository blogRepository, HttpSession httpSession, LikeServiceImpl likeService) {
         this.customerRepository = customerRepository;
         this.commentService = commentService;
+        this.blogRepository = blogRepository;
         this.httpSession = httpSession;
+        this.likeService = likeService;
     }
 
     @Override
@@ -87,6 +97,17 @@ public class CustomerServiceImpl implements CustomerService {
         }
         commentService.create(createCommentDto,customer);
     return customer.getName()+ " commented on this blog";}
+
+    @Override
+    public String createLike(LikeCreateDto likeCreateDto) {
+        Integer customerId = (Integer) httpSession.getAttribute("id");
+        if (customerId == null) throw new CustomerNotFoundException("Login please");
+        Blog blog = blogRepository.findById(likeCreateDto.getBlogId()).orElseThrow(()-> new BlogNotExist("Blog does not exist!"));
+        Customer customer = customerRepository.findById(
+                customerId).orElseThrow(()-> new CustomerNotFoundException("Please Identify yourself as Customer!"));
+        if(!customer.getRole().equals("USER")) throw new CustomerNotFoundException("You must be a Customer to Like");
+        return likeService.create(likeCreateDto, customer, blog );
+    }
 
     @Override
     public String logoutCustomer() {
