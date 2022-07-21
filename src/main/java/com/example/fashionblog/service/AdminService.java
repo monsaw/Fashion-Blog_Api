@@ -2,6 +2,7 @@ package com.example.fashionblog.service;
 
 import com.example.fashionblog.dto.*;
 import com.example.fashionblog.entity.Admin;
+import com.example.fashionblog.enums.Rate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,4 +31,6 @@ public interface AdminService {
     List<AllBlogResponseDto> allBlogsByCreator(String name);
 
     List<?> findAllByBlogId(Integer blogId);
+
+    LikesCountResponseDto getTotalCount(LikeCountDto likeCountDto);
 }

@@ -1,20 +1,26 @@
 package com.example.fashionblog.serviceImpl;
 
 import com.example.fashionblog.dto.LikeCreateDto;
+import com.example.fashionblog.dto.LikesCountResponseDto;
 import com.example.fashionblog.entity.Blog;
 import com.example.fashionblog.entity.Customer;
 import com.example.fashionblog.entity.Like;
 import com.example.fashionblog.enums.Rate;
 import com.example.fashionblog.exceptions.BlogNotExist;
+import com.example.fashionblog.repository.BlogRepository;
 import com.example.fashionblog.repository.LikeRepository;
 import com.example.fashionblog.service.LikeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
 public class LikeServiceImpl implements LikeService {
+
+    private final BlogRepository blogRepository;
 
     private final LikeRepository likeRepository;
     @Override
@@ -43,5 +49,21 @@ public class LikeServiceImpl implements LikeService {
         likeRepository.save(like);
         if(likeCreateDto.getRate() == Rate.LIKE) return "You just Liked the blog!";
         return "You just Disliked the blog";
+    }
+
+    @Override
+    public LikesCountResponseDto getLikeCount(Rate rate, Integer blogId) {
+        Blog blog = blogRepository.findById(blogId).orElseThrow(()-> new BlogNotExist("Blog does not exist!"));
+        List<Like> rateCount = likeRepository.findAllByRateAndBlogId(rate,blogId);
+
+        LikesCountResponseDto likeCount = LikesCountResponseDto.builder()
+                .blogId(blogId)
+                .blogPost(blog.getBlogPost())
+                .categoryName(blog.getCategory().getCategoryName())
+                .description(blog.getDescription())
+                .imageUrl(blog.getImageUrl())
+                .Total("The total "+ rate + " count for this blog is " + rateCount.size())
+                .build();
+        return likeCount;
     }
 }

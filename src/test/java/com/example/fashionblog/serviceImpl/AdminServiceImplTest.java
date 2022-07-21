@@ -28,9 +28,11 @@ class AdminServiceImplTest {
 
     CommentServiceImpl commentService;
 
+    LikeServiceImpl likeService;
+
     AdminCreateDto adminCreateDto = new AdminCreateDto();
     @Autowired
-    AdminServiceImpl adminService = new AdminServiceImpl(adminRepository, httpSession, categoryService,
+    AdminServiceImpl adminService = new AdminServiceImpl(likeService, adminRepository, httpSession, categoryService,
             blogService, commentService);
 
 

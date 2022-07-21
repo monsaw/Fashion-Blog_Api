@@ -2,6 +2,8 @@ package com.example.fashionblog.controllers;
 
 
 import com.example.fashionblog.dto.*;
+import com.example.fashionblog.entity.Blog;
+import com.example.fashionblog.enums.Rate;
 import com.example.fashionblog.serviceImpl.AdminServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -73,4 +75,12 @@ public class AdminController {
         return ResponseEntity.ok(adminService.findAllByBlogId(blogId));
 
     }
+
+
+    @PostMapping("/view-total-like-blog")
+    public ResponseEntity<LikesCountResponseDto> blogLikeCount(@RequestBody LikeCountDto likeCountDto){
+        return ResponseEntity.ok(adminService.getTotalCount(likeCountDto));
+    }
+
+
 }

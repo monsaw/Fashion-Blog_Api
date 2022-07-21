@@ -3,6 +3,7 @@ package com.example.fashionblog.serviceImpl;
 
 import com.example.fashionblog.dto.*;
 import com.example.fashionblog.entity.Admin;
+import com.example.fashionblog.enums.Rate;
 import com.example.fashionblog.exceptions.AdminExistException;
 import com.example.fashionblog.exceptions.AdminNotFound;
 import com.example.fashionblog.repository.AdminRepository;
@@ -11,11 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
-import java.util.Collections;
 import java.util.List;
 
 @Service
 public class AdminServiceImpl implements AdminService {
+
+    private final LikeServiceImpl likeService;
 
     private final AdminRepository adminRepository;
     private final HttpSession httpSession;
@@ -27,8 +29,10 @@ public class AdminServiceImpl implements AdminService {
     private final CommentServiceImpl commentService;
 
     @Autowired
-    public AdminServiceImpl(AdminRepository adminRepository, HttpSession httpSession, CategoryServiceImpl
+    public AdminServiceImpl(LikeServiceImpl likeService, AdminRepository adminRepository, HttpSession httpSession,
+                            CategoryServiceImpl
             categoryService, BlogServiceImpl blogService, CommentServiceImpl commentService) {
+        this.likeService = likeService;
         this.adminRepository = adminRepository;
         this.httpSession = httpSession;
         this.categoryService = categoryService;
@@ -155,6 +159,15 @@ public class AdminServiceImpl implements AdminService {
             return commentService.findAllByBlogId(blogId);
         }
         throw new AdminNotFound("You are required to login as admin to view all comment...");
+
+    }
+
+    @Override
+    public LikesCountResponseDto getTotalCount(LikeCountDto likeCountDto) {
+        if(getLoggedAdminByEmailAndRole()){
+            return likeService.getLikeCount(likeCountDto.getRate(),likeCountDto.getBlogId());
+        }
+        throw new AdminNotFound("You are required to login as admin to view all like and dislike blog...");
 
     }
 
