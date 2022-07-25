@@ -31,7 +31,7 @@ class CustomerServiceImplTest {
         customerCreateDto.setName("Paul");
         customerCreateDto.setPassword("12345");
 
-        customerCreateDto.setEmail("Lawalmonsawopeyemi@gmail.com");
+        customerCreateDto.setEmail("Lawalmonsaw@gmail.com");
 
 
         assertEquals("Customer Created!!", customerService.create(customerCreateDto) );
