@@ -13,7 +13,7 @@ public class CustomerController {
 
     public final CustomerServiceImpl customerService;
 
-    public CustomerController(CategoryServiceImpl categoryService, CustomerServiceImpl customerService) {
+    public CustomerController(CustomerServiceImpl customerService) {
         this.customerService = customerService;
 
     }

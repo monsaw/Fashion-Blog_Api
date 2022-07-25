@@ -15,7 +15,7 @@ public class GlobalErrorHandler {
     public ResponseEntity<ErrorResponse> handlerForAdminExistException(final AdminExistException ex){
         ErrorResponse errorResponse = new ErrorResponse();
         errorResponse.setMessage(ex.getMessage());
-//        errorResponse.setDebugMessage("Check if Someone has already signup with that email!");
+
         errorResponse.setHttpStatus(HttpStatus.BAD_REQUEST);
         return ResponseEntity.ok(errorResponse);
     }
@@ -24,7 +24,7 @@ public class GlobalErrorHandler {
     public ResponseEntity<ErrorResponse>handlerForAdminNotFoundException(final AdminNotFound ex){
         ErrorResponse errorResponse = new ErrorResponse();
         errorResponse.setMessage(ex.getMessage());
-//        errorResponse.setDebugMessage("Check your login details , something is wrong ");
+
         errorResponse.setHttpStatus(HttpStatus.NOT_FOUND);
         return ResponseEntity.ok(errorResponse);
     }
@@ -34,7 +34,7 @@ public class GlobalErrorHandler {
     public ResponseEntity<ErrorResponse>handlerForAdminNotFoundException(final CategoryExistException ex){
         ErrorResponse errorResponse = new ErrorResponse();
         errorResponse.setMessage(ex.getMessage());
-//        errorResponse.setDebugMessage("Already have this category!!");
+
         errorResponse.setHttpStatus(HttpStatus.BAD_REQUEST);
         return ResponseEntity.ok(errorResponse);
     }
@@ -43,7 +43,7 @@ public class GlobalErrorHandler {
     public ResponseEntity<ErrorResponse>handlerForAdminNotFoundException(final BlogNotExist ex){
         ErrorResponse errorResponse = new ErrorResponse();
         errorResponse.setMessage(ex.getMessage());
-//        errorResponse.setDebugMessage("Verify if truly you have the blog");
+
         errorResponse.setHttpStatus(HttpStatus.BAD_REQUEST);
         return ResponseEntity.ok(errorResponse);
     }

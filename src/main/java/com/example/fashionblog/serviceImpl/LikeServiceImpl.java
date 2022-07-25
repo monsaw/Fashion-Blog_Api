@@ -30,7 +30,6 @@ public class LikeServiceImpl implements LikeService {
            else return "You have already Disliked this blog, You can choose to Like it";
         }
 
-
         if(likeRepository.findByCustomerAndBlog(customer, blog) != null){
             Like like = likeRepository.findByCustomerAndBlog(customer,blog);
             like.setBlog(blog);

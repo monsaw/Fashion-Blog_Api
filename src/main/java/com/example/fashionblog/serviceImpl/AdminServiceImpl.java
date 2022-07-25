@@ -8,11 +8,13 @@ import com.example.fashionblog.exceptions.AdminExistException;
 import com.example.fashionblog.exceptions.AdminNotFound;
 import com.example.fashionblog.repository.AdminRepository;
 import com.example.fashionblog.service.AdminService;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -172,7 +174,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
 
-    private Boolean getLoggedAdminByEmailAndRole() {
+    public Boolean getLoggedAdminByEmailAndRole() {
         String adminEmail =  (String) httpSession.getAttribute("adminEmail");
         String Role = (String) httpSession.getAttribute("adminRole");
 
