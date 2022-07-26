@@ -1,25 +1,50 @@
 version: "3"
 services:
-  mysql-standalone:
-    image: "mysql:8.0.29"
-    environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_PASSWORD=root
-      - MYSQL_DATABASE=Fashiondb
+  server:
+    build: .
+    restart: always
     ports:
-      - "3307:3306"
-  springboot-docker-container:
-    image: springboot-docker-container
-    ports:
-      - "8080:8080"
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-standalone:3306/Fashiondb?autoReconnect=true&useSSL=false
-      SPRING_DATASOURCE_USERNAME: "root"
-      SPRING_DATASOURCE_PASSWORD: "Servelet2022"
-    build:
-      context: "/"
-      dockerfile: "Dockerfile"
+      - 8080:8080
     depends_on:
-      - mysql-standalone
+      - mysqldb
+  mysqldb:
+    platform: linux/x86_64
+    image: "mysql:8.0.29"
+    restart: always
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_DATABASE: fashiondb
+#      MYSQL_USER: root
+#      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
+
+#      mysqldb_1  |     - MYSQL_ROOT_PASSWORD
+#      mysqldb_1  |     - MYSQL_ALLOW_EMPTY_PASSWORD
+#      mysqldb_1  |     - MYSQL_RANDOM_ROOT_PASSWORD
+
+
+
+#  mysql-standalone:
+#    image: "mysql:8.0.29"
+#    environment:
+#      - MYSQL_ROOT_PASSWORD=root
+#      - MYSQL_PASSWORD=root
+#      - MYSQL_DATABASE=Fashiondb
+#    ports:
+#      - "3307:3306"
+#  springboot-docker-container:
+#    image: fashion-blog-api
+#    ports:
+#      - "8080:8080"
+#    environment:
+#      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-standalone:3306/Fashiondb?autoReconnect=true&useSSL=false
+#      SPRING_DATASOURCE_USERNAME: "root"
+#      SPRING_DATASOURCE_PASSWORD: "Servelet2022"
+#    build:
+#      context: "/"
+#      dockerfile: "Dockerfile"
+#    depends_on:
+#      - mysql-standalone
 
 

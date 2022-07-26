@@ -1,4 +1,4 @@
 FROM openjdk:17
 EXPOSE 8080
-ADD target/Fashion-Blog-Api.jar Fashion-Blog-Api.jar
-ENTRYPOINT ["java" , "-jar" , "Fashion-Blog-Api.jar"]
+ADD target/fashion-blog-api.jar fashion-blog-api.jar
+ENTRYPOINT ["java" , "-jar" , "fashion-blog-api.jar"]
